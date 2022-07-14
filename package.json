@@ -2,7 +2,7 @@
   "name": "gymnew",
   "version": "1.0.0",
   "description": "Gym New Project",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd client && npm install && npm run build",
