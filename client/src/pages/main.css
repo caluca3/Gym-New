@@ -39,7 +39,8 @@ ul {
     background: #1d0e15;
 }
 
-.about__description {
+.about__description,
+.guide__description {
     font-size: 1.3rem;
     color: #fff;
 }

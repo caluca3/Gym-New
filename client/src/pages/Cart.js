@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useCart } from 'react-use-cart';
 import Navbar from '../components/Navbar';
+import PaymentCard from '../components/PaymentCard';
 import './main.css';
 
 const Cart = () => {
-
     const {
         isEmpty,
         totalUniqueItems,
@@ -84,9 +84,18 @@ const Cart = () => {
                         >
                             Limpiar Carrito
                         </button>
-                        <Link to='/login' className='btn btn-primary'>
+                        {/* A button that opens a modal */}
+                        <button
+                            className='btn btn-success'
+                            data-bs-toggle='modal'
+                            data-bs-target='#payment'
+                        >
                             Comprar Ahora
-                        </Link>
+                        </button>
+                        <PaymentCard
+                            id='payment'
+                            pay={`Pagar: $ ${cartTotal}`}
+                        />
                     </div>
                 </div>
             </section>

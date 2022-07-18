@@ -17,61 +17,65 @@ import Products from './pages/Products';
 import Profile from './pages/Profile';
 import Register from './pages/Register';
 import Services from './pages/Services';
+import UserGuide from './pages/UserGuide';
 import store from './store';
 import setAuthToken from './utils/setAuthToken';
 
 if (localStorage.token) {
-  setAuthToken(localStorage.token);
+    setAuthToken(localStorage.token);
 }
 
 const App = () => {
 
-  useEffect(() => {
-    store.dispatch(loadUser());
-  }, []);
+    useEffect(() => {
+        store.dispatch(loadUser());
+    }, []);
 
-  return (
-    <Provider store={store}>
-      <div className='App'>
-        <Alert />
-        <Switch>
-          <Route exact path='/'>
-            <Home />
-          </Route>
-          <Route path='/about'>
-            <About />
-          </Route>
-          <Route path='/contact'>
-            <Contact />
-          </Route>
-          <Route path='/services'>
-            <Services />
-          </Route>
-          <Route path='/products'>
-            <CartProvider>
-              <Products />
-            </CartProvider>
-          </Route>
-          <Route path='/cart'>
-            <CartProvider>
-              <Cart />
-            </CartProvider>
-          </Route>
-          <Route path='/dashboard'>
-            <Dashboard />
-          </Route>
-          <Route path='/login'>
-            <Login />
-          </Route>
-          <Route path='/register'>
-            <Register />
-          </Route>
-          <PrivateRoute exact path='/profile' component={Profile} />
-          <PrivateRoute exact path='/create-profile' component={CreateProfile} />
-        </Switch>
-      </div>
-    </Provider>
-  )
+    return (
+        <Provider store={store}>
+            <div className='App'>
+                <Alert />
+                <Switch>
+                    <Route exact path='/'>
+                        <Home />
+                    </Route>
+                    <Route path='/about'>
+                        <About />
+                    </Route>
+                    <Route path='/contact'>
+                        <Contact />
+                    </Route>
+                    <Route path='/services'>
+                        <Services />
+                    </Route>
+                    <Route path='/products'>
+                        <CartProvider>
+                            <Products />
+                        </CartProvider>
+                    </Route>
+                    <Route path='/userguide'>
+                        <UserGuide />
+                    </Route>
+                    <Route path='/cart'>
+                        <CartProvider>
+                            <Cart />
+                        </CartProvider>
+                    </Route>
+                    <Route path='/dashboard'>
+                        <Dashboard />
+                    </Route>
+                    <Route path='/login'>
+                        <Login />
+                    </Route>
+                    <Route path='/register'>
+                        <Register />
+                    </Route>
+                    <PrivateRoute exact path='/profile' component={Profile} />
+                    <PrivateRoute exact path='/create-profile' component={CreateProfile} />
+                </Switch>
+            </div>
+        </Provider>
+    )
 }
 
 export default App

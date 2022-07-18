@@ -38,6 +38,11 @@ const Footer = () => {
                                     Productos
                                 </Link>
                             </li>
+                            <li>
+                                <Link to='/userguide' className='footer-link'>
+                                    Guia de Usuario
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                     <div className='col-md-3 mb-md-0 mb-3 footer__icons'>

@@ -1,8 +1,11 @@
 {
   "files": {
-    "main.css": "/static/css/main.ef055afc.css",
-    "main.js": "/static/js/main.355ed3e8.js",
+    "main.css": "/static/css/main.83aec2a9.css",
+    "main.js": "/static/js/main.d6ad5333.js",
+    "static/media/guiausuario.pdf": "/static/media/guiausuario.50c12aaa1ee236f125bd.pdf",
     "static/media/straps.png": "/static/media/straps.cdb53db412c3c787de6b.png",
+    "static/media/step5.png": "/static/media/step5.73fdda2544cf366f49bf.png",
+    "static/media/step8.png": "/static/media/step8.36c3b05f71db4376cb4b.png",
     "static/media/proteina.png": "/static/media/proteina.215515daad2af0eefc95.png",
     "static/media/creatina.png": "/static/media/creatina.89df59071ea16aee1828.png",
     "static/media/login.png": "/static/media/login.31f32fa6497fca40c6d7.png",
@@ -14,16 +17,23 @@
     "static/media/mancuernas.png": "/static/media/mancuernas.6ca703a2a98c03079474.png",
     "static/media/services-3.jpg": "/static/media/services-3.aa55ca58bd0c3a805685.jpg",
     "static/media/services-2.jpg": "/static/media/services-2.37488ef6931fb0145747.jpg",
+    "static/media/step1.png": "/static/media/step1.243aee58308426e85bce.png",
+    "static/media/step7.png": "/static/media/step7.a1039c6ff8cd722c6230.png",
     "static/media/toalla.jpg": "/static/media/toalla.cee8e321c099c212fa03.jpg",
     "static/media/botella.png": "/static/media/botella.1ff6d92aedf6b32d8212.png",
+    "static/media/step6.png": "/static/media/step6.f18eee7498c204723041.png",
+    "static/media/step3.png": "/static/media/step3.f6c91f4e9409d25f1f77.png",
     "static/media/home-bg.jpg": "/static/media/home-bg.f16fef2d211e48e3eb2e.jpg",
+    "static/media/check.png": "/static/media/check.088953a81722f83c7279.png",
+    "static/media/step4.png": "/static/media/step4.ac41f5ad930c7696089c.png",
+    "static/media/step2.png": "/static/media/step2.bbb781266a65d18f09f9.png",
     "static/media/bolso.png": "/static/media/bolso.4c82e3117b9609ad21c7.png",
     "index.html": "/index.html",
-    "main.ef055afc.css.map": "/static/css/main.ef055afc.css.map",
-    "main.355ed3e8.js.map": "/static/js/main.355ed3e8.js.map"
+    "main.83aec2a9.css.map": "/static/css/main.83aec2a9.css.map",
+    "main.d6ad5333.js.map": "/static/js/main.d6ad5333.js.map"
   },
   "entrypoints": [
-    "static/css/main.ef055afc.css",
-    "static/js/main.355ed3e8.js"
+    "static/css/main.83aec2a9.css",
+    "static/js/main.d6ad5333.js"
   ]
 }
