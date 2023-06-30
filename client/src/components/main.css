@@ -5,7 +5,7 @@
 .navbar-logo {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #ff5421 !important;
+    color:#218cff !important;
 }
 
 .nav-link,
@@ -16,17 +16,17 @@
 }
 
 .btn-primary {
-    background: #ff5421;
+    background: #218cff;
     border: none;
 }
 
 .btn-primary:hover {
-    background: #f17f5c;
+    background: #65c14e;
     color: #fff;
 }
 
 .footer {
-    background: #ff5421;
+    background: #218cff;
 }
 
 .footer-link {

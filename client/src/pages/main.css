@@ -22,7 +22,7 @@ ul {
 .register__logo,
 .profile__logo {
     font-size: 2rem;
-    color: #ff5421;
+    color: #218cff;
 }
 
 .home__title {
@@ -48,13 +48,13 @@ ul {
 .title,
 .about__icon,
 .plans__icon {
-    color: #ff5421;
+    color: #218cff;
 }
 
 .fs-2,
 .fs-3,
 .fs-5 {
-    color: #ff5421;
+    color: #218cff;
     font-weight: 600;
 }
 
@@ -80,12 +80,12 @@ ul {
 .login__register:hover,
 .register__logo:hover,
 .profile__logo:hover {
-    color: #ff5421 !important;
+    color: #218cff !important;
 }
 
 .login__forget,
 .login__register {
-    color: #ff5421;
+    color: #218cff;
     cursor: pointer;
 }
 
@@ -137,7 +137,10 @@ ul {
 }
 
 .dashboard__exercises {
-    color: #ff5421;
+    color: #218cff;
     font-weight: 500;
     text-transform: uppercase;
+}
+img{
+    border-radius: 20%;
 }

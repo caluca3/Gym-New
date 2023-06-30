@@ -1,14 +1,15 @@
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { Link, Redirect } from 'react-router-dom'
-import Button from '../components/Button'
-import Footer from '../components/Footer'
-import Navbar from '../components/Navbar'
-import home from '../images/home.png'
-import Imc from './Imc'
-import './main.css'
-import Newsletter from './Newsletter'
-import Plans from './Plans'
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
+import Button from '../components/Button';
+import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
+//import home from '../images/home.png';
+import campos from '../images/campos.jpg';
+import Imc from './Imc';
+import './main.css';
+import Newsletter from './Newsletter';
+//import Plans from './Plans'
 
 
 const Home = ({ isAutheticated }) => {
@@ -22,11 +23,11 @@ const Home = ({ isAutheticated }) => {
                 <div className='container'>
                     <div className='row align-items-center min-vh-100'>
                         <div className='col-md-6'>
-                            <img src={home} className='w-100 mt-5 pt-5' alt='Home GymNew' />
+                            <img src={campos} className='w-75 mt-5 pt-5' alt='Home GymNew' />
                         </div>
                         <div className='col-md-6 text-center text-md-left mb-4'>
-                            <span className='home__subtitle'>Regresa al gimnasio</span>
-                            <h3 className='home__title pt-2'>Empieza con Gym New</h3>
+                            <span className='home__subtitle'>Entrena!!</span>
+                            <h3 className='home__title pt-2'>Empieza con EvolutionFit</h3>
                             <Link to='/login'>
                                 <Button title='Empezar Ahora' />
                             </Link>
@@ -35,7 +36,7 @@ const Home = ({ isAutheticated }) => {
                 </div>
             </section>
             <Imc />
-            <Plans />
+        
             <Newsletter />
             <Footer />
         </>
