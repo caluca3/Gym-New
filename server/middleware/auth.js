@@ -3,7 +3,6 @@ const config = require('config');
 
 const secret = process.env.JWT_SECRET;
 
-
 module.exports = function (req, res, next) {
     //Get token from header
     const token = req.header('x-auth-token');

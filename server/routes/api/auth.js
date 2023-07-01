@@ -1,14 +1,12 @@
-const express = require('express');
 const router = express.Router();
+const express = require('express');
 const bcrypt = require('bcryptjs');
-const auth = require('../../middleware/auth');
 const jwt = require('jsonwebtoken');
-const config = require('config');
 const { check, validationResult } = require('express-validator');
+const auth = require('../../middleware/auth');
 const User = require('../../models/User');
 
 const secret = process.env.JWT_SECRET;
-
 
 router.get('/', auth, async (req, res) => {
 
