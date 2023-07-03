@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const { check, validationResult } = require('express-validator');
-const User = require('../../models/User');
+const prisma = require('../../config/prisma-client');
 
 const router = express.Router();
 
@@ -12,9 +12,7 @@ const secret = process.env.JWT_SECRET;
 
 router.post('/', [
     check('name', 'Name is required').not().isEmpty(),
-    check('lastname', 'Last name is required').not().isEmpty(),
     check('email', 'Please insert a valid email').isEmail(),
-    check('phone', 'Please insert a phone').not().isEmpty(),
     check('password', 'Please insert a password with 6 o more characters').isLength({ min: 6 })
 ],
     async (req, res) => {
@@ -23,27 +21,29 @@ router.post('/', [
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() })
         }
-        const { name, lastname, email, phone, password } = req.body
+        const { name, email, password } = req.body
 
         try {
-            let user = await User.findOne({ email });
+            let user = await prisma.user.findUnique({ where:{email} });
 
             if (user) {
                 res.status(400).json({ errors: [{ msg: 'User already exists' }] });
             }
-
-            user = new User({
-                name,
-                lastname,
-                email,
-                phone,
-                password
-            });
-
+             
             const salt = await bcrypt.genSalt(10);
-            user.password = await bcrypt.hash(password, salt);
+            const passwordHash = await bcrypt.hash(password, salt);
 
-            await user.save();
+            user = prisma.user.create({
+                data:{
+                    email,
+                    password:passwordHash,
+                    profile:{
+                        create:{
+                            name
+                        }
+                    }
+                }
+            })
 
             const payload = {
                 user: {
