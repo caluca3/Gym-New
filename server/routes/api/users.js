@@ -2,7 +2,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const config = require('config');
+//const config = require('config');
 const { check, validationResult } = require('express-validator');
 const prisma = require('../../config/prisma-client');
 
@@ -21,11 +21,12 @@ router.post('/', [
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() })
         }
-        const { name, email, password } = req.body
-
+        const { name, email, password } = req.body;
+        
         try {
+            console.log(req.body)
             let user = await prisma.user.findUnique({ where:{email} });
-
+            console.log(user)
             if (user) {
                 res.status(400).json({ errors: [{ msg: 'User already exists' }] });
             }
@@ -33,7 +34,7 @@ router.post('/', [
             const salt = await bcrypt.genSalt(10);
             const passwordHash = await bcrypt.hash(password, salt);
 
-            user = prisma.user.create({
+            user = await prisma.user.create({
                 data:{
                     email,
                     password:passwordHash,
@@ -66,5 +67,26 @@ router.post('/', [
             res.status(500).send('Server error');
         }
     });
+
+
+router.get('/',async(req,res)=>{
+    const user = await prisma.user.findFirst({
+        include:{
+            profile:true,
+        }
+    });
+    res.json({
+        user
+    })
+});
+
+router.delete('/',async(req,res)=>{
+    const { id } = req.params;
+    const usuario = await prisma.user.deleteMany( {where:{id}} );
+     res.json({
+        message:`usuario ${usuario}eliminado`
+     });
+
+});
 
 module.exports = router;
