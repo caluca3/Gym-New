@@ -1,0 +1,1 @@
+export { CardTuriscController } from "./CardTuriscController";
