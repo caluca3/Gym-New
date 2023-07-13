@@ -9,60 +9,56 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 //Datos usuarios
 model User {
-  id String @id @default(uuid())
-  email String @unique
+  id       String        @id @default(uuid())
+  email    String        @unique
   password String
-  profile UserProfile?
-  payment UserPayment[]
+  profile  UserProfile?
+  payment  UserPayment[]
 }
 
-model UserProfile{
-  id String @id @default(uuid())
+model UserProfile {
+  id     String @id @default(uuid())
   idUser String @unique
-  name String
-  user User @relation(fields: [idUser],references: [id])
+  name   String
+  user   User   @relation(fields: [idUser], references: [id])
 }
-
 
 //Datos de pago
-model MonthlyPayment{
-  id String @id @default(uuid())
-  name String
-  year Int
-  createDate DateTime
-  amount Float
+model MonthlyPayment {
+  id           String        @id @default(uuid())
+  name         String
+  year         Int
+  createDate   DateTime
+  amount       Float
   userPayments UserPayment[]
 }
 
-model UserPayment{
-  id String @id @default(uuid())
-  idUser String @unique
-  date DateTime
-  amount Float
+model UserPayment {
+  id               String         @id @default(uuid())
+  idUser           String         @unique
+  date             DateTime
+  amount           Float
   idMonthlyPayment String
-  user User @relation(fields: [idUser],references: [id])
-  monthlyPayment MonthlyPayment @relation(fields: [idMonthlyPayment],references: [id])
+  user             User           @relation(fields: [idUser], references: [id])
+  monthlyPayment   MonthlyPayment @relation(fields: [idMonthlyPayment], references: [id])
 }
 
-
-
-
 //Categoria productos front-end
-model Categoria{
-  id String @id @default(uuid())
-  name String @unique
+model Categoria {
+  id        String    @id @default(uuid())
+  name      String    @unique
   productos Product[]
 }
 
-model Product{
-  id String @id @default(uuid())
-  name String
+model Product {
+  id          String     @id @default(uuid())
+  name        String
   description String
-  imgURL String
-  available Boolean
-
-  idCategoria String @unique
-  categoria Categoria @relation(fields: [idCategoria],references: [id])
+  imgURL      String     @default("")
+  available   Boolean    @default(true)
+  idCategoria String?
+  categoria   Categoria? @relation(fields: [idCategoria], references: [id], onUpdate: SetNull, onDelete: SetNull)
 }
