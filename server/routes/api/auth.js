@@ -3,8 +3,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
-const User = require('../../models/User');
-
+const prisma = require('../../config/prisma-client');
+//const User = require('../../models/User');
+//Prisma model
 const router = express.Router();
 const secret = process.env.JWT_SECRET;
 
@@ -38,7 +39,7 @@ router.post('/', [
         const { email, password } = req.body
 
         try {
-            let user = await User.findOne({ email });
+            let user = await prisma.user.findUnique({where:email});
 
             if (!user) {
                 return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
