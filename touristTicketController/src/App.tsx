@@ -17,10 +17,183 @@ import {
   TableHeaderCell,
   TableBody,
   TableCell,
+  Button,
 } from "@tremor/react";
-import { useState } from "react";
 import { CardTuriscController } from "./components";
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
+enum Action {
+  "Add" = "add",
+  "Decrease" = "decrease",
+}
+
+enum AgeStagePerson {
+  Child = "Niño",
+  Teen = "Adolocente",
+  Adult = "Adulto",
+  Foreign = "Extranjero",
+  Diversity = "Diversidad",
+  OlderAdult = "Adulto Mayor",
+}
+
+enum GenderPerson {
+  Male = "Masculino",
+  Female = "Femenino",
+}
+
+type PersonType = {
+  gender: GenderPerson;
+  ageStage: AgeStagePerson;
+};
+
+interface Tour {
+  id: number;
+  createAt?: Date;
+  persons: { info: PersonType; acount: number }[];
+}
+
+interface TouristState {
+  tours: Tour[];
+  newTour: Tour;
+  changeCount: (position: number, type: Action) => void;
+  processTour: () => void;
+}
+
+const initialState = {
+  id: 1,
+  persons: [
+    {
+      acount: 0,
+      info: {
+        ageStage: AgeStagePerson.Child,
+        gender: GenderPerson.Male,
+      },
+    },
+    {
+      acount: 0,
+      info: {
+        ageStage: AgeStagePerson.Child,
+        gender: GenderPerson.Female,
+      },
+    },
+    {
+      acount: 0,
+      info: {
+        ageStage: AgeStagePerson.Teen,
+        gender: GenderPerson.Male,
+      },
+    },
+    {
+      acount: 0,
+      info: {
+        ageStage: AgeStagePerson.Teen,
+        gender: GenderPerson.Female,
+      },
+    },
+
+    {
+      acount: 0,
+      info: {
+        ageStage: AgeStagePerson.Adult,
+        gender: GenderPerson.Male,
+      },
+    },
+    {
+      acount: 0,
+      info: {
+        ageStage: AgeStagePerson.Adult,
+        gender: GenderPerson.Female,
+      },
+    },
+
+    {
+      acount: 0,
+      info: {
+        ageStage: AgeStagePerson.OlderAdult,
+        gender: GenderPerson.Male,
+      },
+    },
+    {
+      acount: 0,
+      info: {
+        ageStage: AgeStagePerson.OlderAdult,
+        gender: GenderPerson.Female,
+      },
+    },
+    {
+      acount: 0,
+      info: {
+        ageStage: AgeStagePerson.Foreign,
+        gender: GenderPerson.Male,
+      },
+    },
+    {
+      acount: 0,
+      info: {
+        ageStage: AgeStagePerson.Foreign,
+        gender: GenderPerson.Female,
+      },
+    },
+
+    {
+      acount: 0,
+      info: {
+        ageStage: AgeStagePerson.Diversity,
+        gender: GenderPerson.Male,
+      },
+    },
+    {
+      acount: 0,
+      info: {
+        ageStage: AgeStagePerson.Diversity,
+        gender: GenderPerson.Female,
+      },
+    },
+  ],
+};
+
+const useTouristStore = create<TouristState>()(
+  persist(
+    (set, get) => ({
+      tours: [],
+      newTour: initialState,
+      changeCount: (position: number, type: Action) => {
+        const newTour = get().newTour;
+
+        const persons = newTour.persons.map((item, index) => {
+          if (index === position && type === Action.Add) {
+            item.acount = item.acount + 1;
+          } else if (index === position && type === Action.Decrease) {
+            item.acount =
+              item.acount === 0 ? (item.acount = 0) : item.acount - 1;
+          }
+          return item;
+        });
+
+        set({
+          newTour: {
+            ...newTour,
+            persons,
+          },
+        });
+      },
+      processTour: () => {
+        const newTour = get().newTour;
+
+        newTour.createAt = new Date();
+
+        get().tours.push(newTour);
+
+        set(() => ({ newTour: { ...initialState, id: newTour.id + 1 } }));
+      },
+    }),
+    {
+      name: "Prueba-6",
+      storage: createJSONStorage(() => sessionStorage),
+    }
+  )
+);
 
 const colors: { [key: string]: Color } = {
   Completado: "gray",
@@ -67,10 +240,14 @@ const tasks = [
 ];
 
 function App() {
-  const [data, setData] = useState([
-    { tipo: "Adulto", genero: "Femenino", id: 1, account: 0 },
-  ]);
-
+  const tours = useTouristStore((state: TouristState) => state.tours);
+  const newTour = useTouristStore((state: TouristState) => state.newTour);
+  const changeCount = useTouristStore(
+    (state: TouristState) => state.changeCount
+  );
+  const process = useTouristStore((state: TouristState) => state.processTour);
+  console.log(newTour);
+  console.log(tours);
   return (
     <main className="p-6">
       <Title>Control de entradas</Title>
@@ -83,16 +260,30 @@ function App() {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <Grid numItemsMd={2} numItemsLg={3} className="gap-6 mt-6">
-              {data.map((item) => (
+            <Grid
+              numItems={2}
+              numItemsMd={3}
+              numItemsLg={4}
+              className="gap-2 mt-6"
+            >
+              {newTour.persons.map((item, index) => (
                 <CardTuriscController
-                  key={item.id}
-                  title={item.tipo}
-                  gender={item.genero}
-                  acount={item.account}
+                  key={item.info.ageStage + item.info.gender}
+                  title={item.info.ageStage}
+                  gender={item.info.gender}
+                  acount={item.acount}
+                  handleAddButton={() => changeCount(index, Action.Add)}
+                  handleDecreaseButton={() =>
+                    changeCount(index, Action.Decrease)
+                  }
                 />
               ))}
             </Grid>
+            <Flex className="mt-2">
+              <Button size="xl" onClick={process}>
+                Procesar Recorrido
+              </Button>
+            </Flex>
           </TabPanel>
           <TabPanel>
             <div className="mt-6">
