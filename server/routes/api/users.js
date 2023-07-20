@@ -31,7 +31,7 @@ router.post(
     try {
       console.log(req.body);
       let user = await prisma.user.findUnique({ where: { email } });
-      console.log(user);
+      //console.log(user);
       if (user) {
         res.status(400).json({ errors: [{ msg: "User already exists" }] });
       }
@@ -77,7 +77,7 @@ router.get("/", async (req, res) => {
 
 router.delete("/", async (req, res) => {
   const { id } = req.params;
-  const usuario = await prisma.user.delete({where:id});
+  const usuario = await prisma.user.delete({ where: id });
   res.json({
     message: `usuario ${usuario}eliminado`,
   });

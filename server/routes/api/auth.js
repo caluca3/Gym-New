@@ -1,76 +1,33 @@
-const express = require('express');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const { check, validationResult } = require('express-validator');
-const auth = require('../../middleware/auth');
-const prisma = require('../../config/prisma-client');
-//const User = require('../../models/User');
-//Prisma model
+const express = require("express");
+const bodyParser = require("body-parser");
+const prisma = require("../../config/prisma-client");
+const jwt = require("jsonwebtoken");
+const { check } = require("express-validator");
+
 const router = express.Router();
-const secret = process.env.JWT_SECRET;
 
-router.get('/', auth, async (req, res) => {
+router.use(bodyParser.json());
 
-    try {
-        const user = await User.findById(req.user.id).select('-password');
-
-        res.json(user);
-
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server error');
-    }
-});
-
-//@route POST api/auth
-//@desc Authentication user & get token
-//@access Public
-
-router.post('/', [
-    check('email', 'Please insert a valid email').isEmail(),
-    check('password', 'Please is required').exists()
-],
-    async (req, res) => {
-        const errors = validationResult(req)
-
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() })
-        }
-        const { email, password } = req.body
-
-        try {
-            let user = await prisma.user.findUnique({where:email});
-
-            if (!user) {
-                return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
-            }
-
-            const isMatch = await bcrypt.compare(password, user.password);
-
-            if (!isMatch) {
-                return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
-            }
-
-            const payload = {
-                user: {
-                    id: user.id
-                }
-            }
-
-            jwt.sign(
-                payload,
-                secret,
-                { expiresIn: 360000 },
-                (err, token) => {
-                    if (err) throw err;
-                    res.json({ token })
-                }
-            );
-
-        } catch (err) {
-            console.error(err.message);
-            res.status(500).send('Server error');
-        }
+router.post(
+  "/login",
+  [
+    check("email", "Please insert a valid email").isEmail(),
+    check("password", "Please is required").exists(),
+  ],
+  async (req, res) => {
+    const { email, password } = req.body;
+    const user = await prisma.user.findMany({
+      where: { email, password },
     });
+    if (user) {
+      const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+        expiresIn: 360000,
+      });
+      res.status(200).json({ token });
+    } else {
+      res.status(401).json({ error: "Invalid credentials" });
+    }
+  }
+);
 
 module.exports = router;
