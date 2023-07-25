@@ -1,5 +1,5 @@
-import express, { Express, Request, Response } from "express";
-import { NextAuth } from "./routes";
+import express, { Request, Response } from "express";
+
 import dotenv from "dotenv";
 import path from "path";
 
@@ -9,8 +9,6 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
-
-app.use(NextAuth);
 
 // Deployment
 if (process.env.NODE_ENV === "production") {
