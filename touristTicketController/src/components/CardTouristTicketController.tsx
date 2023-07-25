@@ -11,34 +11,32 @@ import {
 import { MinusCircleIcon } from "./icons/MinusCircleIcon";
 import { PlusCircleIcon } from "./icons/PlusCircle";
 
-export function CardTuriscController({
+export function CardTouristTicketController({
   title,
   gender,
-  acount,
+  account,
   handleAddButton,
   handleDecreaseButton,
 }: {
   title: string;
   gender: string;
-  acount: number;
+  account: number;
   handleAddButton: () => void;
   handleDecreaseButton: () => void;
 }) {
   return (
-    <Card className="min-h-28 divide-y p-0 flex flex-col justify-between">
-      <Flex className="p-3 md:p-6 flex-col md:flex-row">
-        <Title className="inline-block">
-          {title}
-        </Title>
+    <Card className="min-h-28 divide-y p-0 flex flex-col justify-between dark:bg-custom-five-500">
+      <Flex className="p-3 md:p-6 flex-col md:flex-row ">
+        <Title className="inline-block">{title}</Title>
         <Subtitle>{gender}</Subtitle>
-        <Badge className="inline-block ml-1">Cantidad {acount}</Badge>
+        <Badge className="inline-block ml-1">Cantidad {account}</Badge>
       </Flex>
       <div>
         <Flex className="divide-x">
           <div className="flex-1 w-0 flex ">
             <button
               onClick={handleAddButton}
-              className="p-1 flex-1 rounded-bl-lg border border-transparent text-center inline-flex justify-center items-center w-0"
+              className="p-1 flex-1 rounded-bl-lg border border-transparent text-center inline-flex justify-center items-center w-0 dark:bg-custom-tertiary-500"
             >
               <Icon icon={PlusCircleIcon} />
               <Text>
@@ -49,7 +47,7 @@ export function CardTuriscController({
           <div className="flex-1 w-0 flex">
             <button
               onClick={handleDecreaseButton}
-              className="p-1 md:p-2 flex-1 rounded-br-lg border border-transparent text-center inline-flex justify-center items-center w-0"
+              className="p-1 flex-1 rounded-br-lg border border-transparent text-center inline-flex justify-center items-center w-0 dark:bg-custom-tertiary-500"
             >
               <Icon icon={MinusCircleIcon} />
               <Text>

@@ -13,7 +13,7 @@ router.post(
   async (req, res) => {
     const { name, description } = req.body;
     const newProduct = await prisma.product.create({
-      data: { name,description },
+      data: { name, description },
     });
     res.json({
       message: "Product created successfully",
@@ -35,14 +35,14 @@ router.get("/:id", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-  const {name,description} = req.body;
+  const { name, description } = req.body;
   const user = await prisma.product.update({
-    data:{
-      name:name,
-      description:description
-    }
+    data: {
+      name: name,
+      description: description,
+    },
   });
-  res.json({user});
+  res.json({ user });
 });
 
 router.delete("/:id", async (req, res) => {
@@ -51,9 +51,8 @@ router.delete("/:id", async (req, res) => {
     where: {
       id,
     },
-  })
-  res.json(user)
-})
-
+  });
+  res.json(user);
+});
 
 module.exports = router;

@@ -1,1 +1,1 @@
-export { CardTuriscController } from "./CardTuriscController";
+export { CardTouristTicketController } from "./CardTouristTicketController";

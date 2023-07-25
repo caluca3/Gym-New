@@ -19,7 +19,7 @@ import {
   TableCell,
   Button,
 } from "@tremor/react";
-import { CardTuriscController } from "./components";
+import { CardTouristTicketController } from "./components";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
@@ -185,11 +185,13 @@ const useTouristStore = create<TouristState>()(
 
         get().tours.push(newTour);
 
-        set(() => ({ newTour: { ...initialState, id: newTour.id + 1 } }));
+        set(() => ({
+          newTour: { id: newTour.id + 1, persons: initialState.persons },
+        }));
       },
     }),
     {
-      name: "Prueba-6",
+      name: "Prueba-7",
       storage: createJSONStorage(() => sessionStorage),
     }
   )
@@ -207,14 +209,14 @@ const tasks = [
     id: 1,
     tipo: "adulto",
     generos: ["m", "f"],
-    observacion: "inclucion",
+    observacion: "inclusion",
   },
   {
     state: "Pendiente",
     id: 2,
-    tipo: "adolecente",
+    tipo: "adolescente",
     generos: ["m", "f"],
-    observacion: "inclucion",
+    observacion: "inclusion",
   },
   {
     state: "Pendiente",
@@ -228,14 +230,14 @@ const tasks = [
     id: 4,
     tipo: "diversidad funcionar",
     generos: ["m", "f"],
-    observacion: "inclucion",
+    observacion: "inclusion",
   },
   {
     state: "Pendiente",
     id: 5,
     tipo: "visitante internacionales",
     generos: ["m", "f"],
-    observacion: "inclucion",
+    observacion: "inclusion",
   },
 ];
 
@@ -245,18 +247,17 @@ function App() {
   const changeCount = useTouristStore(
     (state: TouristState) => state.changeCount
   );
+
   const process = useTouristStore((state: TouristState) => state.processTour);
-  console.log(newTour);
-  console.log(tours);
+
   return (
-    <main className="p-6">
+    <main className="p-6 bg-custom-secondary-500 dark:bg-custom-primary-500 h-screen">
       <Title>Control de entradas</Title>
       <Text>Lorem ipsum dolor sit amet, consetetur sadipscing elitr.</Text>
-
       <TabGroup className="mt-6">
         <TabList>
           <Tab>APP</Tab>
-          <Tab>ESTADISTICAS</Tab>
+          <Tab>ESTADÍSTICAS</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -267,11 +268,11 @@ function App() {
               className="gap-2 mt-6"
             >
               {newTour.persons.map((item, index) => (
-                <CardTuriscController
+                <CardTouristTicketController
                   key={item.info.ageStage + item.info.gender}
                   title={item.info.ageStage}
                   gender={item.info.gender}
-                  acount={item.acount}
+                  account={item.acount}
                   handleAddButton={() => changeCount(index, Action.Add)}
                   handleDecreaseButton={() =>
                     changeCount(index, Action.Decrease)
